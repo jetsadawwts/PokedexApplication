@@ -10,9 +10,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.jetsadawwts.pokedexapplication.pokemondetail.PokemonDetailScreen
 import com.jetsadawwts.pokedexapplication.pokemonlist.PokemonListScreen
 import com.jetsadawwts.pokedexapplication.ui.theme.PokedexApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,7 +28,7 @@ class MainActivity : ComponentActivity() {
                             PokemonListScreen(navController = navController)
                         }
                         composable(
-                            "pokemon_list_detail_screen/{dominantColor}/{pokemonName}",
+                            "pokemon_detail_screen/{dominantColor}/{pokemonName}",
                                 arguments = listOf(
                                     navArgument("dominantColor") {
                                     type = NavType.IntType
@@ -44,6 +46,11 @@ class MainActivity : ComponentActivity() {
                             val pokemonName = remember {
                                 it.arguments?.getString("pokemonName")
                             }
+                            PokemonDetailScreen(
+                                dominantColor = dominantColor,
+                                pokemonName = pokemonName?.lowercase(Locale.ROOT) ?: "",
+                                navController = navController
+                            )
                         }
                 }
             }
